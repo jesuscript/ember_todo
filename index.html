@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ember.js • TodoMVC</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <script type="text/x-handlebars" data-template-name="todos">
+            
+            <section id="todoapp">
+                <header id="header">
+                    <h1>todos</h1>
+                    {{view Ember.TextField id="new-todo" placeholder="What needs to be done?" valueBinding="newTitle" action="createTodo"}}
+                </header>
+
+                <section id="main">
+                    {{outlet}}
+                </section>
+
+                <footer id="footer">
+                    <span id="todo-count">
+                        <strong>{{remaining}}</strong> {{inflection}} left
+                    </span>
+                    <ul id="filters">
+                        <li><a href="all" class="selected">All</a></li>
+                        <li><a href="active">Active</a></li>
+                        <li><a href="completed">Completed</a></li>
+                    </ul>
+                    <button id="clear-completed">
+                        Clear completed (1)
+                    </button>
+                </footer>
+            </section>
+
+            <footer id="info">
+                <p>Double-click to edit a todo</p>
+            </footer>
+
+            <div style="border-bottom: 3px solid #000;">
+            </div>
+
+            <section id="summary" class="pres">
+                <h1>Summary:</h1>
+                <ul>
+                    <li>
+                        <strong>Suitability:</strong> It's a robust, featureful, heavily data-driven framework. Definitely suitable for us</li>
+                    <li>
+                        <strong>DDG:</strong> makes sense to just replace. Ember is big enough as it is. Plus OOP, pub-sub, keybindings and other features of DDG are present in Ember. 
+                    </li>
+                    <li><strong>Testing:</strong> yes, no problems there.</li>
+                    <li><strong>Help and documentation:</strong></li>
+                </ul>
+            </section>
+            
+            <section id="upsides" class="pres">
+                <h1>Benefits</h1>
+                <ul>
+                    <li>Allows to do more with less</li>
+                    <li>Very reliable</li>
+                    <li>Pleasant to use</li>
+                    <li>Well-suited for the scales and types of our apps</li>
+                </ul>
+            </section>
+            <section id="downsides" class="pres">
+                <h1>Downsides:</h1>
+                <ul>
+                    <li>Doesn't work in IE7</li>
+                    <li>IE8 seems to be OK with minor issues</li>
+                    <li>Huge. 3 times bigger than Angular. 4 times bigger than Backbone.</li>
+                    <li>"...you could end up fighting the framework if you don’t like the way it does certain things. There are some things that you just need to buy into... "</li>
+                    <li>Steep learning curve</li>
+                </ul>
+            </section>
+
+            <section id="features" class="pres">
+                <h1>Features:</h1>
+                <ul>
+                    <li>"Oppinionated, idiomatic framework"</li>
+                    <li>Fairly standard MVC pattern</li>
+                    <li>Feature-heavy
+                        <ul>
+                            <li>Minimises bolierplate</li>
+                            <li>... at the expense of the learning curve</li>
+                        </ul>
+                    </li>
+                    <li>Learning curve is somewhere in between Backbone and Angular</li>
+                    <li>Modular 
+                        <ul>
+                            <li>Easier to test</li>
+                            <li>Keeps your files tidy</li>
+                            <li>Somewhat hard to navigate</li>
+                        </ul>
+                    </li>
+                    <li>Reminded me of Rails (<em>the good parts</em>)</li>
+                    <li>Heavy use of CoC (e.g. naming conventions)
+                        <ul>
+                            <li>Full of strong conventions</li>
+                            <li>Does a lot of stuff automagically</li>
+                            <li>Considered to be great to "the best" in terms of developer productivity</li>
+                        </ul>
+                    </li>
+                    <li>Advanced OOP support
+                        <ul>
+                            <li>"factory" pattern similar to DDG</li>
+                            <li>class extensions</li>
+                            <li>super calls supported</li>
+                        </ul>
+                    <li>Best used in applications that are "kept open for long periods of time", and</li>
+                    <li>where changes in views or underlying data trigger deep changes in the view hierarchy</li>
+                    <li>Testing: plenty of examples for testing with Jasmine</li>
+                    <li>Couldn't find a simple example of a pure single-page app use</li>
+                    <li>Almost all examples are apps where a user might spend all day working in</li>
+                    <li>Mobile-friendly (a number of examples of mobile websites)</li>
+                    <li>Partial views</li>
+                    <li>Two-way bindings (similar to Knockout)</li>
+                    <li>Mature technology (aka SproutCore 2.0)
+                        <ul>
+                            <li>Large community</li>
+                            <li>Well-developed ecosystem (far behind Backbone though)</li>
+                        </ul>
+                    </li>
+                    <li>Well documented:
+                        <ul>
+                            <li>Tutorials</li>
+                            <li>API</li>
+                            <li>Stack Overflow</li>
+                        </ul>
+                    </li>
+                    <li>Requires a highest learning investment at the beginning to get basic things done</li>
+                </ul>
+            </section>
+            <section id="examples" class="pres">
+                <h1>Example websites using Ember:</h1>
+                <ul>
+                    <li>
+                        <a href="http://www.zendesk.com/">Zendesk</a>
+                    </li>
+                    <li>
+                        <a href="https://www.livingsocial.com/">LivingSocial</a>
+                    </li>
+                    <li>
+                        <a href="http://www.groupon.com/browse/chicago?z=skip">Groupon</a>
+                    </li>
+                    <li>
+                        <a href="http://www.nezasa.com/">Nezasa (<strong>COOL!</strong>)</a>
+                    </li>
+                    <li>
+                        <a href="https://www.yapp.us/">Yapp (could watch "take the tour" video, first half)</a>
+                    </li>
+                </ul>
+            </section>
+        </script>
+        <script type="text/x-handlebars" data-template-name="todos/index">
+            <ul id="todo-list">
+                {{#each controller itemController="todo"}}
+                    <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
+                        {{#if isEditing }}
+                            {{view Todos.EditTodoView valueBinding="title"}}
+                        {{else}}
+                            {{view Ember.Checkbox checkedBinding="isCompleted" class="toggle"}}
+                            <label {{action "editTodo" on="doubleClick"}}>{{title}}</label>
+                            <button {{action "removeTodo"}} class="destroy"></button>
+                        {{/if}}
+                    </li>
+                {{/each}}
+            </ul>
+        </script>
+
+        <script src="js/libs/jquery.js"></script>
+        <script src="js/libs/handlebars.js"></script>
+        <script src="js/libs/ember-latest.js"></script>
+        <script src="js/libs/ember-data.js"></script>
+
+        <script src="js/application.js"></script>
+        <script src="js/router.js"></script>
+        <script src="js/models/store.js"></script>
+        <script src="js/models/todo.js"></script>
+        <script src="js/controllers/todos_controller.js"></script>
+        <script src="js/controllers/todo_controller.js"></script>
+        <script src="js/views/edit_todo_view.js"></script>
+
+    </body>
+</html>
